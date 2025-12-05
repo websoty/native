@@ -1,6 +1,6 @@
-import { useState } from "react";
 import { StatusBar, StyleSheet, View } from "react-native";
 import { COLORS } from "./constants/ui";
+import useTodo from "./hooks/useTodo";
 import Header from "./layout/Header/index";
 import TodoList from "./layout/Header/TodoList";
 import TodoCreator from "./layout/TodoCreator/TodoCreator";
@@ -13,25 +13,8 @@ const defaultTodos: Todo[] = [
 ];
 
 export default function Index() {
-  const [todos, setTodos] = useState<Todo[]>(defaultTodos);
-
-  const addTodo = (title: Todo["title"]) => {
-    setTodos(prev => [...prev, { id: Date.now(), title, isCompleted: false }]);
-  };
-
-  const onDeleteTodo = (id: Todo['id']) => {
-    setTodos(todos.filter(todo => todo.id !== id));
-  }
-
-  const onCheckTodo = (id: Todo['id']) => {
-    setTodos(todos.map(todo => todo.id === id 
-      ? {...todo, isCompleted: !todo.isCompleted} : todo));
-  }
-
-  const onUpdateTodo = (id: Todo['id'], title: Todo['title']) => {
-    setTodos(todos.map(todo => (todo.id === id ? {...todo, title} : todo)));
-  }
-
+  const { todos, addTodo, onCheckTodo, onDeleteTodo, onUpdateTodo } = useTodo();
+  
   const completedTodos = todos.filter((todo) => todo.isCompleted);
   return (
     <View style={styles.container}>

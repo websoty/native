@@ -2,7 +2,7 @@ import StyledButton from "@/app/components/StyledButton";
 import StyledTextInput from "@/app/components/StyledTextInput";
 import { Todo } from "@/app/types/todo";
 import { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { Keyboard, StyleSheet, View } from "react-native";
 
 type TodoCreatorProps = {
   addTodo: (title: Todo["title"]) => void;
@@ -17,8 +17,7 @@ const TodoCreator: React.FC<TodoCreatorProps> = ({ addTodo }) => {
       setInputError(true);
       return;
     }
-    console.log("TEXT:", text.length);
-
+    Keyboard.dismiss();
     addTodo(text);
     setText("");
   };
